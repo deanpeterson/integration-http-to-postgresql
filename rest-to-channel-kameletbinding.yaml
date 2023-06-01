@@ -1,0 +1,22 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: http-to-channel
+spec:
+  source:
+    uri: "platform-http:/insertData?httpMethodRestrict=POST"
+    steps:
+      - setHeader:
+          name: Access-Control-Allow-Origin
+          constant: "*"  # replace with your actual origin
+      - setHeader:
+          name: Access-Control-Allow-Methods
+          constant: "POST"
+      - setHeader:
+          name: Access-Control-Allow-Headers
+          constant: "Content-Type"
+  sink:
+    ref:
+      kind: Channel
+      apiVersion: messaging.knative.dev/v1
+      name: mychannel

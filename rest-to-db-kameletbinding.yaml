@@ -1,0 +1,24 @@
+apiVersion: camel.apache.org/v1alpha1
+kind: KameletBinding
+metadata:
+  name: http-to-postgresql
+  annotations:
+    trait.camel.apache.org/mount.configs: "secret:dbconfig"
+spec:
+  source:
+    ref:
+      kind: Channel
+      apiVersion: messaging.knative.dev/v1
+      name: mychannel
+  sink:
+    ref:
+      kind: Kamelet
+      apiVersion: camel.apache.org/v1alpha1
+      name: postgresql-sink
+    properties:
+      serverName: "{{database.serverName}}"
+      username: "{{database.username}}"
+      password: "{{database.password}}"
+      query: "{{database.query}}"
+      databaseName: "{{database.databaseName}}"
+      serverPort: "{{database.serverPort}}"

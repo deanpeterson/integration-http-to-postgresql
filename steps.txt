@@ -1,0 +1,4 @@
+oc create secret generic dbconfig --from-file=dbconfig.properties
+oc apply -f rest-to-channel-kameletbinding.yaml
+oc apply -f rest-to-db-kameletbinding.yaml
+oc apply -f channel-to-log-kameletbinding.yaml
